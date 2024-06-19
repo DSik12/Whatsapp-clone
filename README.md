@@ -1,28 +1,46 @@
-System Design Report: Chat Application
-Introduction
-The following report outlines the system design for a chat application that allows users to sign up, log in, engage in chats, and manage conversations in real-time. The system leverages a Firebase real-time database for storage and synchronization of user data and chat messages.
-Functional Requirements
-1.	User Authentication and Management:
-o	Users sign up with user_id, password.
-o	Login requires validation against signed_up_users.
-2.	Chat Functionality:
-o	Users can participate in multiple chats.
-o	Chat details are stored in user_chats with references to chatId.
-o	Each chatId links to a conversation stored in conversations.
-3.	Conversation Management:
-o	Conversations (conversations) store messages, participants, and last message details.
-o	Messages include sender ID, content, timestamp, and status (sent, delivered, read).
-4.	Real-time Updates:
-o	Online status and last seen are updated every 5 seconds in signed_up_users.
-o	Chat messages are synced in real-time using Firebase's capabilities.
-5.	User Interface:
-o	Chat page displays sidebar with active chats.
-o	Main chat window shows messages with timestamps aligned based on sender.
-6.	Notifications:
-o	Message statuses (sent, delivered, read) are updated based on receiver actions.
-o	Visual indicators (ticks) show message delivery and read statuses.
-JSON Schema
-json
+# Chat Application
+
+A real-time chat application allowing users to sign up, log in, and engage in conversations. The application leverages Firebase for real-time database management and synchronization.
+
+## Features
+
+- **User Authentication**: Users can sign up and log in with a unique user ID and password.
+- **Multiple Chats**: Users can participate in multiple chat conversations.
+- **Real-time Updates**: Messages and user statuses are updated in real-time.
+- **Conversation Management**: Each conversation includes participants, messages, and the last message details.
+- **User Interface**: Sidebar displays active chats, and the main chat window shows messages with timestamps.
+
+## Functional Requirements
+
+1. **User Authentication and Management**:
+    - Users can sign up with a unique `user_id` and password.
+    - Login requires validation against `signed_up_users`.
+
+2. **Chat Functionality**:
+    - Users can participate in multiple chats.
+    - Chat details are stored in `user_chats` with references to `chatId`.
+    - Each `chatId` links to a conversation stored in `conversations`.
+
+3. **Conversation Management**:
+    - Conversations (`conversations`) store messages, participants, and last message details.
+    - Messages include `senderId`, `content`, `timestamp`, and status (`sent`, `delivered`, `read`).
+
+4. **Real-time Updates**:
+    - Online status and last seen are updated every 5 seconds in `signed_up_users`.
+    - Chat messages are synced in real-time using Firebase's capabilities.
+
+5. **User Interface**:
+    - Chat page displays a sidebar with active chats.
+    - Main chat window shows messages with timestamps aligned based on sender.
+
+6. **Notifications**:
+    - Message statuses (`sent`, `delivered`, `read`) are updated based on receiver actions.
+    - Visual indicators (ticks) show message delivery and read statuses.
+
+## Database Schema
+
+### `signed_up_users`
+```json
 {
   "signed_up_users": {
     "userId1": {
@@ -38,8 +56,7 @@ json
       "name": "User 2",
       "photoURL": "https://example.com/user2.jpg",
       "lastOnline": 1624441200
-    },
-    ...
+    }
   },
   "user_chats": {
     "userId1": {
@@ -49,8 +66,7 @@ json
     "userId2": {
       "username": "User 1",
       "chats": ["chatId1"]
-    },
-    ...
+    }
   },
   "conversations": {
     "chatId1": {
@@ -74,8 +90,7 @@ json
           "content": "Hi User 1!",
           "timestamp": 1624376400,
           "status": "read"
-        },
-        ...
+        }
       },
       "lastMessage": {
         "content": "How are you?",
@@ -109,7 +124,6 @@ json
         "content": "Hi User 1!",
         "timestamp": 1624383600
       }
-    },
-    ...
+    }
   }
-}
+}```
